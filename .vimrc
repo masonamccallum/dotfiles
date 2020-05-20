@@ -1,3 +1,6 @@
+" to deploy dotfiles check out
+" https://www.atlassian.com/git/tutorials/dotfiles
+
 "-----Settings----------------------------------------------
 set tabstop=2
 set autoindent
