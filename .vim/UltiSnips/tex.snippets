@@ -1,0 +1,43 @@
+snippet beg
+\begin{$1}
+$0
+\end{$1}
+endsnippet
+
+snippet sec 
+\section{$1}
+$0
+endsnippet
+
+snippet template
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[]{amssymb}
+\title{$1}
+\author{Mason A. McCallum}
+\begin{document}
+\maketitle
+$0
+\end{document}
+endsnippet
+
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Math" wA
+\[
+$1
+.\]$0
+endsnippet
+
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
