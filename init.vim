@@ -17,6 +17,7 @@ if !exists('g:vscode')
 	let g:tex_flavor='latex'
 
 
+
 	"-----Remappings--------------------------------------------
 	let mapleader=","
 
@@ -26,6 +27,8 @@ if !exists('g:vscode')
 	Plug 'honza/vim-snippets'
 	Plug 'junegunn/goyo.vim'
 	Plug 'lervag/vimtex'
+  Plug 'Konfekt/FastFold'
+  Plug 'matze/vim-tex-fold'
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'scrooloose/nerdtree'
 	Plug 'jiangmiao/auto-pairs'
@@ -37,12 +40,15 @@ if !exists('g:vscode')
 	"k::let g:deoplete#enable_at_startup=1
 	"-----latex----------------------------------------------
 	let g:tex_flavor='latex'
-	let g:vimtex_view_method='zathura'
-	let g:vimtex_quickfix_mode=0
-	let g:Tex_DefaultTargetFormat='pdf'
-	let g:tex_conceal='abdmg'
-	let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
+	let g:tex_conceal = ''
+	"let g:vimtex_view_method='zathura'
+	let g:vimtex_fold_manual = 1
+	let g:vimtex_latexmk_continuous = 1
+	let g:vimtex_compiler_progname = 'nvr'
 
+	nnoremap :vc :VimtexCompile
+	nnoremap :vv VimtexView
+	nnoremap :ve VimtexErrors
 
 	"-----NERD TREE--------------------------------------------
 	map<C-n> :NERDTreeToggle<CR>
@@ -84,6 +90,8 @@ if !exists('g:vscode')
 
 	autocmd! User GoyoEnter call <SID>goyo_enter()
 	autocmd! User GoyoLeave call <SID>goyo_leave()
+
+	highlight Comment ctermfg=red
 
 	"-----ultisnips----------------------------------------------
 	let g:UltiSnipsExpandTrigger='<tab>'
