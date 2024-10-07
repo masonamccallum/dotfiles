@@ -10,6 +10,9 @@ alias vim="nvim"
 alias vi="nvim"
 alias s="ls"
 
+#get vim mode in terminal!!
+bindkey -v
+
 source <(fzf --zsh)
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.config/oh-my-zsh"
