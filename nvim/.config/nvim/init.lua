@@ -26,6 +26,8 @@ vim.opt.list = false
 vim.opt.inccommand = "split"
 
 vim.opt.cursorline = true
+vim.opt.linebreak = true
+vim.opt.wrap = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 

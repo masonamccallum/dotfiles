@@ -36,3 +36,12 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/Users/masonmccallum/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
