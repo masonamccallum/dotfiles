@@ -48,7 +48,7 @@ config.commands.delete.preserve_files = False
 config.commands.edit.default_entry_type = "article"
 # You can specify the editor program. Note, that this default will respect your `$EDITOR`
 # environment setting and fall back to `vim` if that variable is not set.
-config.commands.edit.editor = os.environ.get("EDITOR", "vim")
+config.commands.edit.editor = os.environ.get("EDITOR", "nvim")
 # You can specify whether associated files should be preserved when renaming during editing.
 config.commands.edit.preserve_files = False
 
@@ -202,10 +202,12 @@ config.theme.design = DEFAULT_COLORS
 config.theme.search.label = "blue"
 config.theme.search.query = "red"
 
+
 # You can configure how `rich.Syntax` elements get displayed.
-config.theme.syntax.theme = None
-config.theme.syntax.background_color = None
-config.theme.syntax.line_numbers = True
+# Mason McCallum edit
+#config.theme.syntax.theme = None
+#config.theme.syntax.background_color = None
+#config.theme.syntax.line_numbers = True
 
 # You can also configure the markup used for the following builtin special tags:
 config.theme.tags.new = TagMarkup(10, "bold bright_cyan")

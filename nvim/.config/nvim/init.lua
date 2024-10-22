@@ -451,7 +451,7 @@ require'lspconfig'.julials.setup{
     on_new_config = function(new_config, _)
         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
         if require'lspconfig'.util.path.is_file(julia) then
-        -- vim.notify("Hello!")
+			vim.notify("Hello with julials!")
             new_config.cmd[1] = julia
         end
     end
@@ -478,3 +478,4 @@ vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<CR>")
 vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>")
 vim.keymap.set("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>")
 vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
+
