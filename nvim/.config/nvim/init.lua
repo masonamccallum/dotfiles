@@ -3,6 +3,9 @@ vim.g.maplocalleader = " "
 vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.textwidth = 72
+vim.opt.formatoptions="cqt"
+vim.opt.wrapmargin = 0
 
 vim.opt.mouse = "a"
 
@@ -44,7 +47,6 @@ vim.keymap.set("i", "jk", "<Esc>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- [[ Basic Autocommands ]]
@@ -88,10 +90,10 @@ require("lazy").setup({
 		end
 	},
 	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		ft = { "markdown" },
-		build = function() vim.fn["mkdp#util#install"]() end,
+	    "iamcco/markdown-preview.nvim",
+	    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+	    ft = { "markdown" },
+	    build = function() vim.fn["mkdp#util#install"]() end,
 	},
 	{
 		"renerocksai/telekasten.nvim",
@@ -108,6 +110,12 @@ require("lazy").setup({
 				changedelete = { text = "~" },
 			},
 		},
+	},
+	{
+		"ThePrimeagen/harpoon",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		}
 	},
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
@@ -146,6 +154,7 @@ require("lazy").setup({
 			-- Enable Telescope extensions if they are installed
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
+			pcall(require("telescope").load_extension, 'harpoon')
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
@@ -277,7 +286,6 @@ require("lazy").setup({
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			local servers = {
 				julials = {},
-				ltex = {},
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes = { ...},
@@ -456,18 +464,39 @@ require'lspconfig'.julials.setup{
         end
     end
 }
+
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+local term = require("harpoon.term")
+
+-- [[ harpoon ]]
+vim.keymap.set("n", "<leader>a", mark.add_file, { desc = 'Add current file to harpoon list' })
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = 'Toggle harpoon list' })
+
+-- vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end, { desc = 'jump to first file in harpoon list' })
+vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end, { desc = 'jump to second file in harpoon list' })
+vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end, { desc = 'jump to third file in harpoon list' })
+vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end, { desc = 'jump to fourth file in harpoon list' })
+
 -- Lua initialization file
 vim.cmd [[colorscheme moonfly]]
+-- [[ MarkdownPreview ]]
+vim.api.nvim_command([[let g:mkdp_auto_start = 0]])
+vim.api.nvim_command([[let g:mkdp_auto_stop = 1]])
 -- [[ vimtex ]]
-vim.g.vimtex_view_method = 'sioyek'
-vim.g.vimtex_view_sioyek_exe = '/Applications/sioyek.app/Contents/MacOS/sioyek'
+vim.g.vimtex_view_method = 'skim'
+vim.g.vimtex_view_skim_exe = '/opt/homebrew/bin/skim'
 -- [[ vim-slime config ]]
 vim.g.slime_target = "tmux"
 vim.cmd[[xmap <leader>s <Plug>SlimeRegionSend]]
 vim.api.nvim_command([[let g:slime_default_config = {"socket_name":get(split($TMUX,","), 0), "target_pane":":1.0"}]])
 
 -- [[ telekasten ]]
-require("telekasten").setup({home = vim.fn.expand("~/zettelkasten"),})
+require("telekasten").setup({
+	home = vim.fn.expand("~/zettelkasten"),
+    template_new_weekly = vim.fn.expand("~/zettelkasten/templates/weekly_template.md"),  -- template for new weekly note
+    weeklies = vim.fn.expand("~/zettelkasten/weeklies"),  -- template for new weekly note
+})
 vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<CR>")
 vim.keymap.set("n", "<leader>zf", "<cmd>Telekasten find_notes<CR>")
 vim.keymap.set("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>")
