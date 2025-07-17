@@ -19,6 +19,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
+vim.opt.colorcolumn = "80"
+
 vim.opt.swapfile = false
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -80,6 +82,7 @@ require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	-- "gc" to comment visual regions/lines
 	{ "numToStr/Comment.nvim", opts = {} },
+	{"cappyzawa/trim.nvim",opts = {}},
 	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 	{ "jpalardy/vim-slime" },
 	{
@@ -158,7 +161,6 @@ require("lazy").setup({
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>th", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "[S]earch [F]iles" })
 			vim.keymap.set("n", "<leader>ts", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
@@ -471,7 +473,7 @@ local term = require("harpoon.term")
 
 -- [[ harpoon ]]
 vim.keymap.set("n", "<leader>a", mark.add_file, { desc = 'Add current file to harpoon list' })
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = 'Toggle harpoon list' })
+vim.keymap.set("n", "<leader>th", ui.toggle_quick_menu, { desc = 'Toggle harpoon list' })
 
 -- vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end, { desc = 'jump to first file in harpoon list' })
 vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end, { desc = 'jump to second file in harpoon list' })
@@ -507,4 +509,3 @@ vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<CR>")
 vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>")
 vim.keymap.set("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>")
 vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
-
