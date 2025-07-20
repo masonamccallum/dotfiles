@@ -1,5 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+vim.opt.colorcolumn = "50"
 vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -19,7 +21,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
-vim.opt.colorcolumn = "80"
 
 vim.opt.swapfile = false
 vim.opt.splitright = true
