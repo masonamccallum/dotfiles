@@ -10,3 +10,6 @@ if [ -d  ~/spack ]; then
 else
 	echo "Error: no dir ~/spack"
 fi
+
+[ -z "$TMUX" ] &&  { tmux attach || exec tmux new-session;}
+[ -f  ~/.fzf.bash] && source ~/.fzf.bash
