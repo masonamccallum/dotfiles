@@ -1,4 +1,4 @@
-if [ ! -d  ~/spack]; then
+if [ ! -d  ~/spack ]; then
     git clone https://github.com/spack/spack.git ~/spack
 fi
 
