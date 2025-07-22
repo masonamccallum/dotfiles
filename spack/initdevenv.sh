@@ -1,4 +1,7 @@
-git clone https://github.com/spack/spack.git ~/spack
+if [ ! -d  ~/spack]; then
+    git clone https://github.com/spack/spack.git ~/spack
+fi
+
 cd ~/spack
 . share/spack/setup-env.sh
 cd ~

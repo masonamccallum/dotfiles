@@ -4,9 +4,18 @@ installed will install neovim, stow, and tmux. Use GNU stow to load the
 config files from this dir.
 
 '''
-git clone https://github.com/spack/spack.git ~/spack
-cd ~/spack
-. share/spack/setup-env.sh
-mkdir -p ~/dev-env
-cp ~/dotfiles/spack/dev-env/spack.yaml ~/dev-env
+chmod +x /Users/masonmccallum/dotfiles/spack/initdevenv.sh
+./dotfiles/spack/initdevenv.sh
+'''
+
+## ADD to .bashrc or .zshrc
+make sure to $stow bash or $stow zsh
+also add the following to your .bashrc or .zshrc
+
+'''
+if [[ "$SHELL" == */bash ]]; then
+    [ -f "$HOME/.bash_config" ] && source "$HOME/.bash_config"
+elif [[ "$SHELL" == */zsh ]]; then
+    [ -f "$HOME/.zsh_config" ] && source "$HOME/.zsh_config"
+fi
 '''
