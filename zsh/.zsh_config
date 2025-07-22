@@ -1,0 +1,5 @@
+alias vim="nvim"
+
+if [ -d  ~/spack ]; then
+    . ~/spack/share/spack/setup-env.sh
+fi
