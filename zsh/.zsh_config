@@ -12,4 +12,4 @@ else
 fi
 
 [ -z "$TMUX" ] &&  { tmux attach || exec tmux new-session;}
-[ -f  ~/.fzf.bash] && source ~/.fzf.bash
+[ -f  ~/.fzf.bash ] && source ~/.fzf.bash
