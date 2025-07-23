@@ -19,3 +19,6 @@ elif [[ "$SHELL" == */zsh ]]; then
     [ -f "$HOME/.zsh_config" ] && source "$HOME/.zsh_config"
 fi
 '''
+
+For julia setup neet to see the following
+https://github.com/fredrikekre/.dotfiles/tree/master/.julia/environments/nvim-lspconfig
