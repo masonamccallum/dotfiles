@@ -1,7 +1,11 @@
+-- notes: I had issue with lsp on an hpc system along with treesitter.
+-- treesitter didnt like the compiler module that was loaded. moonfly
+-- also stopped working. For the Lsp I removed mason and manually
+-- installed the lsp with nvim-lspconfig
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.opt.colorcolumn = "50"
+vim.opt.colorcolumn = "80"
 vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
