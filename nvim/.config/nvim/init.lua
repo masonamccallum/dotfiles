@@ -174,14 +174,27 @@ require("lazy").setup({
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-			vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "[S]earch [F]iles" })
-			vim.keymap.set("n", "<leader>ts", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-			vim.keymap.set("n", "<leader>tw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-			vim.keymap.set("n", "<leader>tg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-			vim.keymap.set("n", "<leader>td", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-			vim.keymap.set("n", "<leader>tr", builtin.resume, { desc = "[S]earch [R]esume" })
-			vim.keymap.set("n", "<leader>tb", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader>tf", function()
+				require('telescope.builtin').find_files({
+				})
+			end, { silent = true })
+
+			vim.keymap.set("n", "<leader>tg", function()
+				require('telescope.builtin').live_grep({
+				})
+			end, { silent = true })
+
+			vim.keymap.set("n", "<leader>cf", function()
+				require('telescope.builtin').find_files({
+					cwd = "~/Documents/research/code"
+				})
+			end, { silent = true })
+
+			vim.keymap.set("n", "<leader>cg", function()
+				require('telescope.builtin').live_grep({
+					cwd = "~/Documents/research/code"
+				})
+			end, { silent = true })
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -351,7 +364,8 @@ vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end, { desc = 'jump to th
 vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end, { desc = 'jump to fourth file in harpoon list' })
 
 -- Lua initialization file
-vim.cmd [[colorscheme moonfly]]
+pcall(vim.cmd, "colorscheme moonfly")
+
 -- [[ MarkdownPreview ]]
 vim.api.nvim_command([[let g:mkdp_auto_start = 0]])
 vim.api.nvim_command([[let g:mkdp_auto_stop = 1]])
