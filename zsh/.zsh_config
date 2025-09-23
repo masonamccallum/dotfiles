@@ -3,7 +3,7 @@ alias vim="nvim"
 if [ -d  ~/spack ]; then
     	. ~/spack/share/spack/setup-env.sh
 	if [ -d  ~/spack/var/spack/environments/dev-env ]; then
-		spack env activate -p dev-env
+		spack env activate dev-env
 	else
 		echo "no env dev-env"
 	fi
@@ -12,4 +12,4 @@ else
 fi
 
 [ -z "$TMUX" ] &&  { tmux attach || exec tmux new-session;}
-[ -f  ~/.fzf.bash ] && source ~/.fzf.bash
+source <(fzf --zsh)

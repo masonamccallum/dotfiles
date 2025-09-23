@@ -31,7 +31,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
-vim.opt.list = false
+vim.opt.list = true
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
@@ -39,7 +39,7 @@ vim.opt.cursorline = true
 vim.opt.linebreak = true
 vim.opt.wrap = true
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 0
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -103,10 +103,6 @@ require("lazy").setup({
 	    ft = { "markdown" },
 	    build = function() vim.fn["mkdp#util#install"]() end,
 	},
-	{
-		"renerocksai/telekasten.nvim",
-		requires = { "nvim-telescope/telescope.nvim" },
-	},
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -133,92 +129,20 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 		},
 	},
-	{ -- Fuzzy Finder (files, lsp, etc)
-		"nvim-telescope/telescope.nvim",
-		event = "VimEnter",
-		branch = "0.1.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
-				"nvim-telescope/telescope-fzf-native.nvim",
-
-				-- `build` is used to run some command when the plugin is installed/updated.
-				-- This is only run then, not every time Neovim starts up.
-				build = "make",
-
-				-- `cond` is a condition used to determine whether this plugin should be
-				-- installed and loaded.
-				cond = function()
-					return vim.fn.executable("make") == 1
-				end,
-			},
-			{ "nvim-telescope/telescope-ui-select.nvim" },
-
-			-- Useful for getting pretty icons, but requires a Nerd Font.
-			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-		},
+	{
+	  "ibhagwan/fzf-lua",
+	  -- optional for icon support
+	  dependencies = { "nvim-tree/nvim-web-devicons" },
+	  -- or if using mini.icons/mini.nvim
+	  -- dependencies = { "nvim-mini/mini.icons" },
+	  opts = {},
 		config = function()
-			-- [[ Configure Telescope ]]
-			require("telescope").setup({
-				extensions = {
-					["ui-select"] = {
-						require("telescope.themes").get_dropdown(),
-					},
-				},
-			})
-
-			-- Enable Telescope extensions if they are installed
-			pcall(require("telescope").load_extension, "fzf")
-			pcall(require("telescope").load_extension, "ui-select")
-			pcall(require("telescope").load_extension, 'harpoon')
-
-			-- See `:help telescope.builtin`
-			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>tf", function()
-				require('telescope.builtin').find_files({
-				})
-			end, { silent = true })
-
-			vim.keymap.set("n", "<leader>tg", function()
-				require('telescope.builtin').live_grep({
-				})
-			end, { silent = true })
-
-			vim.keymap.set("n", "<leader>cf", function()
-				require('telescope.builtin').find_files({
-					cwd = "~/Documents/research/code"
-				})
-			end, { silent = true })
-
-			vim.keymap.set("n", "<leader>cg", function()
-				require('telescope.builtin').live_grep({
-					cwd = "~/Documents/research/code"
-				})
-			end, { silent = true })
-
-			-- Slightly advanced example of overriding default behavior and theme
-			vim.keymap.set("n", "<leader>/", function()
-				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-					winblend = 10,
-					previewer = false,
-				}))
-			end, { desc = "[/] Fuzzily search in current buffer" })
-
-			-- It's also possible to pass additional configuration options.
-			--  See `:help telescope.builtin.live_grep()` for information about particular keys
-			vim.keymap.set("n", "<leader>s/", function()
-				builtin.live_grep({
-					grep_open_files = true,
-					prompt_title = "Live Grep in Open Files",
-				})
-			end, { desc = "[S]earch [/] in Open Files" })
-
-			-- Shortcut for searching your Neovim configuration files
-			vim.keymap.set("n", "<leader>sn", function()
-				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "[S]earch [N]eovim files" })
-		end,
+			defaults = {
+				file_icons = false,
+				git_icons = false,
+				color_icons = false,
+			}
+		end
 	},
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
@@ -377,19 +301,19 @@ vim.g.slime_target = "tmux"
 vim.cmd[[xmap <leader>s <Plug>SlimeRegionSend]]
 vim.api.nvim_command([[let g:slime_default_config = {"socket_name":get(split($TMUX,","), 0), "target_pane":":1.0"}]])
 
--- [[ telekasten ]]
-require("telekasten").setup({
-	home = vim.fn.expand("~/zettelkasten"),
-    template_new_weekly = vim.fn.expand("~/zettelkasten/templates/weekly_template.md"),  -- template for new weekly note
-    weeklies = vim.fn.expand("~/zettelkasten/weeklies"),  -- template for new weekly note
-})
-vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<CR>")
-vim.keymap.set("n", "<leader>zf", "<cmd>Telekasten find_notes<CR>")
-vim.keymap.set("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>")
-vim.keymap.set("n", "<leader>zd", "<cmd>Telekasten goto_today<CR>")
-vim.keymap.set("n", "<leader>zw", "<cmd>Telekasten goto_thisweek<CR>")
-vim.keymap.set("n", "<leader>zz", "<cmd>Telekasten follow_link<CR>")
-vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<CR>")
-vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>")
-vim.keymap.set("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>")
-vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
+-- Make sure fzf-lua is required
+local fzf = require("fzf-lua")
+
+-- Examples with <leader> as the prefix
+vim.keymap.set("n", "<leader>f", fzf.files, { desc = "Find files" })
+vim.keymap.set("n", "<leader>g", fzf.live_grep, { desc = "Live grep" })
+vim.keymap.set("n", "<leader>b", fzf.buffers, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>r", fzf.resume, { desc = "Resume last search" })
+
+vim.keymap.set("n", "<leader>cf", function()
+  fzf.files({ cwd = "~/Documents/research/code" })
+end, { desc = "find in code dir" })
+
+vim.keymap.set("n", "<leader>cg", function()
+  fzf.live_grep({ cwd = "~/Documents/research/code" })
+end, { desc = "Live grep in code dir" })
