@@ -1,7 +1,6 @@
--- notes: I had issue with lsp on an hpc system along with treesitter.
--- treesitter didnt like the compiler module that was loaded. moonfly
--- also stopped working. For the Lsp I removed mason and manually
--- installed the lsp with nvim-lspconfig
+vim.keymap.set("n","<C-a>", "<Nop>", { noremap = true, silent = true})
+vim.keymap.set("v","<C-a>", "<Nop>", { noremap = true, silent = true})
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -87,6 +86,18 @@ require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	-- "gc" to comment visual regions/lines
 	{ "numToStr/Comment.nvim", opts = {} },
+	{"vimwiki/vimwiki",
+		init = function()
+		vim.g.vimwiki_list = {
+		{
+		path = '~/wiki',
+		syntax = 'markdown',
+		ext = '.md',
+		diary_frequency = 'monthly',
+		},
+        }
+		end,
+    },
 	{"cappyzawa/trim.nvim",opts = {}},
 	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 	{ "jpalardy/vim-slime" },
@@ -287,6 +298,8 @@ vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end, { desc = 'jump to se
 vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end, { desc = 'jump to third file in harpoon list' })
 vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end, { desc = 'jump to fourth file in harpoon list' })
 
+-- [[ vimwiki ]]
+vim.g.vimwiki_auto_header = 1
 -- Lua initialization file
 pcall(vim.cmd, "colorscheme moonfly")
 
